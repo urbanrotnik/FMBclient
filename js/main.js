@@ -93,7 +93,7 @@ $("#submit-btn").click(function(e){
   });
 
   $(function() {
-    sammy.run('#index');
+    sammy.run('#login');
   });
 
 })(jQuery);
