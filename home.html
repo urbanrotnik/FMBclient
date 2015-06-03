@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<link href="http://code.jquery.com/mobile/latest/jquery.mobile.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+<script type="text/javascript" src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js"></script>
+
+
+<!-- TEMPLATE -->
+<script id="articles-template" type="text/x-handlebars-template">
+<ul id="listv" data-role="listview" data-autodividers="true"  data-filter="true" data-inset="true">
+  {{#entries}} 
+  <li><a href="#" onClick="alert('{{title}}')">{{title}}</a></li>
+  {{/entries}}
+</ul>
+</script> 
+ <!-- TEMPLATE --> 
+
+
+
+<meta charset=utf-8 />
+<title>Moji Dogodki</title>
+</head>
+<body>
+
+
+<div data-role="page" data-theme="b" id="listview-page">
+  <div data-role="header">
+    <h1>Dogodki</h1>
+  </div>
+  <div data-role="content" id="listview-content"> 
+    <p>
+      <div id="articleHandlebars" data-demo-html="true"></div>
+    </p>    
+  </div>
+  <div data-role="footer">
+    <h4>Page Footer</h4>
+  </div><!-- /footer -->
+</div><!-- /page -->
+  
+ <script src="js/home.js"></script>
+</body>
+</html>
