@@ -13,7 +13,7 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
 
 $("#submit-btn").click(function(e){
   var _user = $("#username").val();
-  var _pass = $("#password").val()
+  var _pass = $("#password").val();
   if(_user!=='' || _pass!==''){
     $.ajax({
       url: localStorage.url+'/user/login?username='+_user+'&password='+_pass+'',
@@ -34,44 +34,12 @@ $("#submit-btn").click(function(e){
   e.preventDefault();
 });
 
-//console.log($('#logout').text());
-//    $('#logout').click(function(e){
-//      e.preventDefault();
-//      alert('test')
-//        localStorage.removeItem('username');
-//        localStorage.removeItem('password');
-//        window.location.hash = 'login';
-//    });
-
 //Funkcije katere vračajo rezultat potem v HBS-ju. navigiranje z sammy-om!
 //
 //
 (function($) {
     var sammy = $.sammy( function() {
 
-      /*this.post('#/loginPOST', function (context) {
-        if(this.params['username']!=='' || this.params['password']!==''){
-          $.ajax({
-            url: localStorage.url+'/user/login?username='+this.params['username']+'&password='+this.params['password']+'',
-            type: 'GET',
-            dataType: 'json',         
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},         
-            error: function (xhr, status) {
-               //alert(JSON.stringify(status));;
-               alert("Težave pri prijavi!")
-              window.location.hash = 'login';
-            },
-            success: function (data) {
-              localStorage.setItem('username', data['username']);
-              localStorage.setItem('password', data['password']);
-              localStorage.setItem('id', data['id']);
-              //window.location.hash = 'index';
-             }
-          });
-        }
-        return false;
-    });
-    */
     this.get('#login', function (context) {
       if(localStorage['username']){
         window.location.hash = 'index';
@@ -108,7 +76,7 @@ $("#submit-btn").click(function(e){
                   'title':'Aktivnosti',
                   'entries': data};
              loadActivities(activities);
-            }
+          }
       });
     });
 
