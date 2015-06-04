@@ -1,5 +1,5 @@
 'use strict';
-localStorage.setItem('url', 'http://164.8.221.107:3000');
+localStorage.setItem('url', 'http://localhost:3000');
 
 //////////////////
 //Sinhronizacija//
@@ -127,6 +127,13 @@ function attendActivity(id){
       });
 }
 //call more infor abaout my activities
+
+
+function myAtt(id){
+   window.location.hash = 'myAtt/'+id;
+}
+
+
 function myActivity(id){
    window.location.hash = 'activity/'+id;
 }
@@ -329,17 +336,40 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
             }
         });
     });
+
+//myAtt
+    this.get('#myAtt/:id', function (context) {
+        var id=this.params['id'];
+        window.location.hash = 'attactivity';
+        $.ajax({
+              url: localStorage.url+'/attendant/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+              type: 'GET',
+              dataType: 'json', 
+              contentType: 'application/json; charset=utf-8',           
+              success: function (data) {                
+                  loadAtt(data);
+              }
+          });
+    });
+
+function loadAtt(data){  
+    var source   = $("#att_my_activity-template").html();
+    var template = Handlebars.compile(source);
+    var html = template(data);
+    $("#AattActivity").html(html);           
+}
 //ACTIVITY
     this.get('#activity/:id', function (context) {
         var id=this.params['id'];
-        window.location.hash = 'activity';
+        window.location.hash = 'activaity';
         $.ajax({
-              url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+              url: localStorage.url+'/at/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
               type: 'GET',
               dataType: 'json', 
               contentType: 'application/json; charset=utf-8',           
               success: function (data) {                
                   loadSingleActivity(data);
+                  alert('test');
               }
           });
     });

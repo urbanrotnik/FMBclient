@@ -228,6 +228,19 @@
   </div>
 </div>
 <!--   END page Attend MY ACTIVITY -->  
+<!--  page Attend MY ACTIVITY -->   
+<div data-role="page" id="attactivity">
+  <header data-role="header">
+    <h1></h1>
+    <a href="" onclick="index_page()" data-theme="b" class="ui-btn-left">Nazaj</a>
+  </header>
+  <div data-role="content" id="listview-content">
+    <div id="AattActivity" data-demo-html="true"></div>
+  </div>
+  <div data-role="footer">
+    <h4>FMB</h4>
+  </div>
+</div>
 <!--  page single MY ACTIVITY -->   
 <div data-role="page" id="activity">
   <header data-role="header">
@@ -283,7 +296,7 @@
        <label for="latitude">lat:</label>
        <input type="text" id="latitude" name="latitude" data-theme="d" placeholder="latitude"/>
        <input type="text" id="longitude" name="longitude" data-theme="d" placeholder="longitude"/>
-       <input type="text" id="demo" name="longitude" data-theme="d" placeholder="longitude"/>
+
        <br />
      </div>
      <div data-role="fieldcontainer">
@@ -345,12 +358,18 @@
 <script id="attend-template" type="text/x-handlebars-template">
   <ul id="listv" data-role="listview" data-autodividers="true"  data-filter="true" data-inset="true">
     {{#entries}} 
-    <li>{{activity.name}} , {{activity.start_time}}</li>
+    <li><a href="" onclick="myAtt({{id}})">{{activity.name}} , {{activity.start_time}} {{id}}</a></li>
     {{/entries}}
   </ul>
 </script> 
 <!-- TEMPLATE -->  
-
+<!-- att ACTIVITY TEMPLATE -->
+<script id="att_my_activity-template" type="text/x-handlebars-template">
+  <h2><b>{{number_of_person}}</b></h2><br/>
+  <p>{{description}}</p><br/><br/>
+  {{activity.name}} {{activity.description}}  {{activity.start_time}}
+  <a href="" onclick="deleteActivity({{id}})">Odstrani</a>
+</script> 
 
 <!-- SINGLE ACTIVITY TEMPLATE -->
 <script id="single_my_activity-template" type="text/x-handlebars-template">
