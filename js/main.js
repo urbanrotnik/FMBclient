@@ -1,5 +1,5 @@
 'use strict';
-localStorage.setItem('url', 'http://localhost:3000');
+localStorage.setItem('url', 'http://164.8.221.107:3000');
 
 //////////////////
 //Sinhronizacija//
@@ -87,7 +87,7 @@ function deleteActivity(id){
               'username':localStorage.username,
               'password':localStorage.password};
    $.ajax({
-      url: 'http://localhost:3000/activity/'+id,
+      url: localStorage.url+'/activity/'+id,
       type: 'DELETE',
       data: user,
       dataType: 'json',        
@@ -113,7 +113,7 @@ function attendActivity(id){
                 'user_id':localStorage.id                                   
       };
       $.ajax({
-            url: 'http://localhost:3000/attendant/',
+            url: localStorage.url+'/attendant/',
             type: 'POST',
             data: attend,
             dataType: 'json', 
@@ -198,20 +198,48 @@ $("#submit-add_activity-btn").click(function(e){
             'number_of_person':_number_of_person,
             'category_id':_category,
             'user_id':localStorage.id                                   
-        };
-    $.ajax({
-        url: 'http://localhost:3000/activity',
-        type: 'POST',
-        data: activity,
-        dataType: 'json', 
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},           
-        error: function (xhr, status) {
-            alert("Težave pri prijavi!"+status);
-        },
-        success: function (data) {
-            window.location.hash = 'myactivity';
-        }
-    });
+    };
+
+    var isOffline = 'onLine' in navigator && !navigator.onLine;
+    
+    if ( isOffline ) {
+        alert('toleGreLokalno')
+        var x = 'INSERT INTO ACTIVITIES (name, description, start_time, end_time, latitude, longitude, number_of_person, user_id, category_id, sync) ' 
+                          + 'VALUES ('+
+                            '"'+_name+'", '+
+                            '"'+_description+'", '+
+                            '"'+_start_time+'", '+
+                            '"'+_end_time+'", '+
+                            ''+_latitude+', '+
+                            ''+_longitude+', '+
+                            ''+_number_of_person+', '+
+                            ''+localStorage.id+', '+
+                            ''+1+', '+
+                            ''+0+');'
+
+        var db = openDatabase('activities', '1.0', 'local added activities', 2 * 1024 * 1024);
+        db.transaction(function (tx) {  
+            tx.executeSql('CREATE TABLE IF NOT EXISTS ACTIVITIES (name, description, start_time, end_time, picture, latitude, longitude, number_of_person, user_id, category_id, sync)');
+            tx.executeSql(x);
+        });
+      }
+    else{
+      alert('Direkt na server!')        
+     $.ajax({
+       url: localStorage.url+'/activity',
+       type: 'POST',
+       data: activity,
+       dataType: 'json', 
+       headers: {'Content-Type': 'application/x-www-form-urlencoded'},           
+       error: function (xhr, status) {
+           alert("Težave pri prijavi!"+status);
+       },
+       success: function (data) {
+           window.location.hash = 'myactivity';
+       }
+     });
+
+   }
   }
   e.preventDefault();
   });
@@ -261,7 +289,7 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
 //MY ACTIVITY 
     this.get('#my_activity', function (context) {
      $.ajax({
-           url: 'http://localhost:3000/user/login?username='+localStorage.username+'&password='+localStorage.password+'',
+           url: localStorage.url+'/user/login?username='+localStorage.username+'&password='+localStorage.password+'',
             type: 'GET',
             dataType: 'json',         
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},         
@@ -283,7 +311,7 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
     this.get('#my_attend', function (context) {
       
         $.ajax({
-           url: 'http://localhost:3000/user/login?username='+localStorage.username+'&password='+localStorage.password+'',
+           url: localStorage.url+'/user/login?username='+localStorage.username+'&password='+localStorage.password+'',
             type: 'GET',
             dataType: 'json',         
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},         
@@ -306,7 +334,7 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
         var id=this.params['id'];
         window.location.hash = 'activity';
         $.ajax({
-              url: 'http://localhost:3000/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+              url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
               type: 'GET',
               dataType: 'json', 
               contentType: 'application/json; charset=utf-8',           
@@ -346,7 +374,7 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
           localStorage.setItem('username', 'urban');
           localStorage.setItem('password', 'urban');
           $.ajax({
-              url: 'http://localhost:3000/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+              url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
               type: 'GET',
               dataType: 'json', 
               contentType: 'application/json; charset=utf-8',           
