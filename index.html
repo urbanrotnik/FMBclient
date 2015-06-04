@@ -18,6 +18,28 @@
     <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
     <script type="text/javascript">
 
+    // Wait for device API libraries to load
+    //
+    function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+        document.addEventListener("online", onOnline, false);
+    }
+    // device APIs are available
+    //
+    function onDeviceReady() {
+      document.addEventListener("offline", onOffline, false);
+    }
+
+    function onOnline() {
+      alert('Super, spet imate povezavo!')
+      //Sihroniziraj, če obstaja potreba po tem! 
+      syncToServer();
+    }
+    function onOffline() {
+      alert('Trenutno ste offline! Shranjeni dogodki bodo dodani lokalni in sinhronizirani ob vzpostavitvi povezave')
+    }
+
+
 function initialize1(data) {
   var arrayActivity = [];
 
@@ -45,7 +67,7 @@ for(var i in data){
     </script>
     
 </head>
-<body>
+  <body onload="onLoad()">
   <!--   page INDEX  --> 
   <div data-role="page" id="index">
     <header data-role="header">     
