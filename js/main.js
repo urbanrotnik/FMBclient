@@ -1,5 +1,12 @@
 'use strict';
-localStorage.setItem('url', 'http://localhost:3000');
+localStorage.setItem('url', 'http://164.8.161.79:3000');
+
+
+
+$( document ).delegate("#prazna_stran", "pagebeforecreate", function() {
+  alert('A page with an id of "aboutPage" is about to be created by jQuery Mobile!');
+});
+
 
 //////////////////
 //Sinhronizacija//
@@ -135,10 +142,26 @@ function myAtt(id){
 
 
 function myActivity(id){
-   window.location.hash = 'activity/'+id;
+  $.ajax({
+    url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+    type: 'GET',
+    dataType: 'json', 
+    contentType: 'application/json; charset=utf-8',           
+    success: function (data) {                
+      var source   = $("#single_my_activity-template").html();
+      var template = Handlebars.compile(source);
+      var html = template(data);
+      $("#singleActivity").html(html);
+      $.mobile.pageContainer.pagecontainer('change', '#activity', { transition: "flip"});
+    }
+  });
+  
+   //window.location.hash = 'activity/'+id;
 }
 //call funcntion abaout all activities on Google maps
 function SingleActivity(id){
+
+  //isto kot pri zognji... J**esh sammy-a
    window.location.hash = 'singleactivity/'+id;
 }
 

@@ -34,11 +34,12 @@
     function onLoad() {
         document.addEventListener("deviceready", onDeviceReady, false);
         document.addEventListener("online", onOnline, false);
+        document.addEventListener("offline", onOffline, false);
+
     }
     // device APIs are available
     //
     function onDeviceReady() {
-      document.addEventListener("offline", onOffline, false);
       navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
 
@@ -98,7 +99,8 @@
             });
             var flag=true;
             var content_button='';
-            for(var a in data[i]['attendant']){
+            if(data[i]['attendant'].length > 0 ){
+              for(var a in data[i]['attendant']){
                 if(data[i]['attendant'][a]['user']['id']==localStorage.id){
                   content_button='<button onclick="SingleActivity('+data[i]['id']+')">Poglej prijavo</button>';
                 }else if(data[i]['attendant'][a]['user_id']==localStorage.id){
@@ -106,7 +108,15 @@
                 }else{
                   content_button='<button onclick="SingleActivity('+data[i]['id']+')">Podrobnosti</button>';
                 }
+              }  
+            }else{
+              if(data[i]['user']['id']==localStorage.id){
+                content_button='<button onclick="SingleActivity('+data[i]['id']+')">Poglej prijave</button>';
+              }else{
+                content_button='<button onclick="SingleActivity('+data[i]['id']+')">Podrobnosti</button>';
+              }
             }
+            
             marker.content = '<b>'+data[i]['name']+'</b><br/>'+
             data[i]['description']+content_button;
             var infoWindow = new google.maps.InfoWindow();
