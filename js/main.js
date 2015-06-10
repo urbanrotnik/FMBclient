@@ -1,5 +1,5 @@
 'use strict';
-localStorage.setItem('url', 'http://164.8.161.79:3000');
+localStorage.setItem('url', 'http://164.8.221.107:3000');
 
 
 
@@ -142,16 +142,33 @@ function myAtt(id){
 
 
 function myActivity(id){
+
   $.ajax({
     url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
     type: 'GET',
     dataType: 'json', 
     contentType: 'application/json; charset=utf-8',           
-    success: function (data) {                
-      var source   = $("#single_my_activity-template").html();
+    success: function (data) {      
+
+      //var source   = $("#single_my_activity-template").html();
+      //var template = Handlebars.compile(source);
+      //var html = template(data);
+     // $("#singleActivity").html(html);
+
+     var activities = {
+                  'title':'Aktivnosti',
+                  'entries': data['activityList']};
+             //loadActivities(activities);
+      /*var source   = $("#articles-template").html();
       var template = Handlebars.compile(source);
-      var html = template(data);
-      $("#singleActivity").html(html);
+      var html = template(activities);
+      $("#articleHandlebars").html(html);           
+      $("#listview-content").trigger('create');  
+      $("#my_activity").trigger('pagecreate');
+      $("#articleHandlebars ul").listview('refresh');
+      $("#articleHandlebars ul").listview().listview('refresh');*/
+
+
       $.mobile.pageContainer.pagecontainer('change', '#activity', { transition: "flip"});
     }
   });
@@ -161,12 +178,58 @@ function myActivity(id){
 //call funcntion abaout all activities on Google maps
 function SingleActivity(id){
 
+          //window.location.hash = 'singleactivity';
+          //localStorage.setItem('username', 'urban');
+          //localStorage.setItem('password', 'urban');
+          $.ajax({
+              url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+              type: 'GET',
+              dataType: 'json', 
+              contentType: 'application/json; charset=utf-8',           
+              success: function (data) {   
+                var source   = $("#attend_single_my_activity-template").html();
+                var template = Handlebars.compile(source);
+                var html = template(data);
+                $("#attendsingleActivity").html(html);    
+                $.mobile.pageContainer.pagecontainer('change', '#singleactivity', { transition: "flip"});
+              }
+          });
+
+
   //isto kot pri zognji... J**esh sammy-a
-   window.location.hash = 'singleactivity/'+id;
+  // window.location.hash = 'singleactivity/'+id;
 }
 
 function myActivity_page(){
-   window.location.hash = 'my_activity';
+    $.ajax({
+           url: localStorage.url+'/user/login?username='+localStorage.username+'&password='+localStorage.password+'',
+            type: 'GET',
+            dataType: 'json',         
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},         
+            error: function (xhr, status) {
+             // alert('Napačni podatki');
+              //window.location.hash = 'login';
+            },
+            success: function (data) {
+
+           var activities = {
+                  'title':'Aktivnosti',
+                  'entries': data['activityList']};
+            //loadActivities(activities);
+            var source   = $("#articles-template").html();
+            var template = Handlebars.compile(source);
+            var html = template(activities);
+            $("#articleHandlebars").html(html);           
+            $("#listview-content").trigger('create');  
+            $("#my_activity").trigger('pagecreate');
+            $("#articleHandlebars ul").listview('refresh');
+            $("#articleHandlebars ul").listview().listview('refresh');
+            $.mobile.pageContainer.pagecontainer('change', '#my_activity', { transition: "flip"});
+            }
+        });
+
+
+   //window.location.hash = 'my_activity';
 }
 function index_page(){
    window.location.hash = 'index';
@@ -317,7 +380,10 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
       });
     });
 //MY ACTIVITY 
-    this.get('#my_activity', function (context) {
+
+      //Napisano v kasicnem Jquery zgoraj
+
+    /*this.get('#my_activity', function (context) {
      $.ajax({
            url: localStorage.url+'/user/login?username='+localStorage.username+'&password='+localStorage.password+'',
             type: 'GET',
@@ -336,7 +402,7 @@ $( ".logout_btn" ).bind( "click", function(event, ui) {
             }
         });
     });
-
+  */
 //MY ATTENDS
     this.get('#my_attend', function (context) {
       
@@ -420,7 +486,7 @@ function loadAtt(data){
     $("#articleHandlebars ul").listview().listview('refresh');
 }
 
-    this.get('#singleactivity/:id', function (context) {
+    /*this.get('#singleactivity/:id', function (context) {
           var id=this.params['id'];
          
           window.location.hash = 'singleactivity';
@@ -436,7 +502,7 @@ function loadAtt(data){
                 loadAttendSingleActivity(data);
               }
           });
-     });
+     });*/
  
 function loadActivities(data){  
     var source   = $("#articles-template").html();
