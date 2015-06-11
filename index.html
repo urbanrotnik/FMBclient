@@ -47,7 +47,7 @@
     }
 
     function onOnline() {
-      alert('Super, spet imate povezavo!')
+      //alert('Super, spet imate povezavo!')
       //Sihroniziraj, če obstaja potreba po tem! 
       syncToServer();
     }
@@ -57,9 +57,13 @@
     // onSuccess Geolocation
     function onSuccess(position) {
         var element = document.getElementById('geolocation-lng');
-        element.innerHTML = position.coords.longitude;
+        element.innerHTML = position.coords.latitude;
+        localStorage.setItem('latitude', position.coords.latitude);
+
         var element2 = document.getElementById('geolocation-lat');
         element2.innerHTML = position.coords.longitude;
+        localStorage.setItem('longitude', position.coords.longitude);
+
     }
     // onError Callback receives a PositionError object
     function onError(error) {
@@ -355,8 +359,8 @@
       <div data-role="fieldcontainer">
        <a href="#" onclick="nastaviMojoLokacijo()" class="ui-btn ui-icon-location ui-btn-icon-left">Moja lokacija</a>
        <label for="latitude">lat:</label>
-       <input type="text" id="latitude" name="latitude" data-theme="d" placeholder="latitude"/>
-       <input type="text" id="longitude" name="longitude" data-theme="d" placeholder="longitude"/>
+       <input type="text" id="latitude-input" name="latitude" data-theme="d" placeholder="latitude"/>
+       <input type="text" id="longitude-input" name="longitude" data-theme="d" placeholder="longitude"/>
 
        <br />
      </div>

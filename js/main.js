@@ -1,9 +1,15 @@
 'use strict';
-localStorage.setItem('url', 'http://localhost:3000');
+localStorage.setItem('url', 'http://164.8.221.107:3000');
 
 
 //Funkcije brez strani!
 //Izbris aktivnosti
+
+function nastaviMojoLokacijo(){
+  //alert('burek')
+  $("#latitude-input").val(localStorage.getItem('latitude'));
+  $("#longitude-input").val(localStorage.getItem('longitude'));
+}
 function deleteActivity(id){
    var user = {
               'username':localStorage.username,
@@ -248,7 +254,7 @@ $("#submit-add_activity-btn").click(function(e){
         });
       }
     else{
-      alert('Direkt na server!')        
+      //alert('Direkt na server!')        
      $.ajax({
        url: localStorage.url+'/activity',
        type: 'POST',
@@ -259,7 +265,8 @@ $("#submit-add_activity-btn").click(function(e){
            alert("Težave pri dodajanju!"+status);
        },
        success: function (data) {
-          $.mobile.pageContainer.pagecontainer('change', '#my_activities', { transition: "flip"});
+          //$.mobile.pageContainer.pagecontainer('change', '#my_activities', { transition: "flip"});
+          my_activities();
        }
      });
 
