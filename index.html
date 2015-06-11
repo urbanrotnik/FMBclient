@@ -97,12 +97,17 @@
       for(var i in data){   
         var myLatlng = new google.maps.LatLng(data[i]['latitude'],data[i]['longitude']);
         
+        var content_button='';
+
+        
         var marker = new google.maps.Marker({
           position: myLatlng,
           map: map,
           title: data[i]['name'],
           icon: 'img/marker_me.png'
           });
+
+
 
         if(data[i]['user_id']==localStorage.id){
           marker = new google.maps.Marker({
@@ -111,6 +116,9 @@
           title: data[i]['name'],
           icon: 'img/marker_me.png'
           });
+
+          //Ker je to od userja aktivnost nastavi gumb na Poglej si mojo aktivnost
+          content_button='<button onclick="activitiy_details('+data[i]['id']+')">Poglej mojo aktivnost</button>';
         }
         else if(data[i]['user']['sex'] === 'male'){
           marker = new google.maps.Marker({
@@ -129,27 +137,28 @@
           });
         }
         
-        var flag=true;
-        var content_button='';
-        
-        if(data[i]['attendant'].length > 0 ){
-          for(var a in data[i]['attendant']){
-            if(data[i]['attendant'][a]['user']['id']==localStorage.id){
-              content_button='<button onclick="activitiy_details('+data[i]['id']+')">Poglej prijavo</button>';
-            }else if(data[i]['attendant'][a]['user_id']==localStorage.id){
-              content_button='Poglej svojo aktivnost: <button onclick="activitiy_details('+data[i]['id']+')">Podrobnosti</button>';
-            }else{
-              content_button='<button onclick="activitiy_details('+data[i]['id']+')">Podrobnosti</button>';
-            }
-          }  
-        }else{
-          if(data[i]['user']['id']==localStorage.id){
-            content_button='<button onclick="activitiy_details('+data[i]['id']+')">Poglej prijave</button>';
-          }else{
-            content_button='<button onclick="activitiy_details('+data[i]['id']+')">Podrobnosti</button>';
+        var flag=false;
+
+
+        if(data[i]['user_id']!=localStorage.id){
+          if(data[i]['attendant'].length > 0 ){
+            for(var a in data[i]['attendant']){
+              if(data[i]['attendant'][a]['user_id']==localStorage.id){
+                flag = true;
+              }
+            }  
+          }
+          if(flag){
+            //Sem prijavljen, poglej podrobnosti
+             content_button='<button onclick="activitiy_details('+data[i]['id']+')">Sem že prijavljen. Poglej!</button>';
+          }
+          else{
+            //Nisem prijavljen, nastavi gumb na priajvi me
+              content_button='<button onclick="activitiy_details('+data[i]['id']+')">Podrobnosti in prijava</button>';
+
           }
         }
-        
+
         marker.content = '<b>'+data[i]['name']+'</b><br/>'+
         data[i]['description']+content_button;
         var infoWindow = new google.maps.InfoWindow();
