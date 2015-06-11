@@ -88,9 +88,9 @@
 
     var map;
     function initialize1(data) {
-      var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+      var myLatlng = new google.maps.LatLng(46.563882,15.644922);
       var mapOptions = {
-                        zoom: 4,
+                        zoom: 9,
                         center: myLatlng
                         }
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -133,7 +133,7 @@
           position: myLatlng,
           map: map,
           title: data[i]['name'],
-          icon: 'img/marker_feme.png'
+          icon: 'img/marker_female.png'
           });
         }
         
@@ -180,6 +180,7 @@
       <h1>Prijava</h1>
     </header>
     <div data-role="content">
+     <div align = "center"> <img align="center" src="img/fmb.png" alt="Smiley face" height="70%" width="70%"></div>
      <form id="login_form" method="POST">
         <label for="text-1">Uporabnisko:</label>
         <input type="text" name="username" id="username" value="">
