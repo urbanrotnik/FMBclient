@@ -96,14 +96,42 @@
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       for(var i in data){   
         var myLatlng = new google.maps.LatLng(data[i]['latitude'],data[i]['longitude']);
+        
         var marker = new google.maps.Marker({
           position: myLatlng,
           map: map,
           title: data[i]['name'],
           icon: 'img/marker_me.png'
           });
+
+        if(data[i]['user_id']==localStorage.id){
+          marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: data[i]['name'],
+          icon: 'img/marker_me.png'
+          });
+        }
+        else if(data[i]['user']['sex'] === 'male'){
+          marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: data[i]['name'],
+          icon: 'img/marker_male.png'
+          });
+        }
+        else{
+          marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: data[i]['name'],
+          icon: 'img/marker_feme.png'
+          });
+        }
+        
         var flag=true;
         var content_button='';
+        
         if(data[i]['attendant'].length > 0 ){
           for(var a in data[i]['attendant']){
             if(data[i]['attendant'][a]['user']['id']==localStorage.id){

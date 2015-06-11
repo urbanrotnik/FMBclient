@@ -75,6 +75,10 @@ function index_page(){
       };
       initialize1(data);
       $.mobile.pageContainer.pagecontainer('change', '#index', { transition: "flip"});
+      //mislim da bi moral bit initialize1 callback function, oziroma bi blo treba po koncu inita nekaj refreshat.. 
+      alert('ta alert mora bit, drugač zemljevida nena pokaže!')
+      //window.location.hash = 'index';
+
     }
   });
 }
