@@ -317,7 +317,7 @@ $("#submit-add_activity-btn").click(function(e){
         });
       }
     else{
-      alert('Direkt na server!')        
+            
      $.ajax({
        url: localStorage.url+'/activity',
        type: 'POST',
@@ -450,15 +450,15 @@ function loadAtt(data){
 //ACTIVITY
     this.get('#activity/:id', function (context) {
         var id=this.params['id'];
-        window.location.hash = 'activaity';
+        window.location.hash = 'activity';
         $.ajax({
-              url: localStorage.url+'/at/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
+              url: localStorage.url+'/activity/'+id+'?username='+localStorage.username+'&password='+localStorage.password,
               type: 'GET',
               dataType: 'json', 
               contentType: 'application/json; charset=utf-8',           
               success: function (data) {                
                   loadSingleActivity(data);
-                  alert('test');
+               //   alert('test');
               }
           });
     });

@@ -71,7 +71,7 @@
       var lng = $("#geolocation-lng").text();
        $("#geolocation-lat").hide();
        $("#geolocation-lng").hide();
-       alert(' neVrzem te na'+lat+lng);
+       //alert(' neVrzem te na'+lat+lng);
        if(lat===null || lng ===null || lat ===''|| lng ===''){
             alert('ni mozno dostopat do lokacije');
         }else{         
@@ -99,7 +99,9 @@
             });
             var flag=true;
             var content_button='';
-            if(data[i]['attendant'].length > 0 ){
+
+        
+          if(data[i]['attendant'].length > 0 ){
               for(var a in data[i]['attendant']){
                 if(data[i]['attendant'][a]['user']['id']==localStorage.id){
                   content_button='<button onclick="SingleActivity('+data[i]['id']+')">Poglej prijavo</button>';
@@ -116,7 +118,8 @@
                 content_button='<button onclick="SingleActivity('+data[i]['id']+')">Podrobnosti</button>';
               }
             }
-            
+
+
             marker.content = '<b>'+data[i]['name']+'</b><br/>'+
             data[i]['description']+content_button;
             var infoWindow = new google.maps.InfoWindow();
@@ -351,7 +354,7 @@
   <!--   END MY ACTIVITY --> 
 
 <!--   INCLUDE SAMMY ROUTING -->   
-<script type="text/javascript" src="js/main.js"></script>
+
 <!--<script type="text/javascript" src="js/main.js"></script>-->
 
 <!-- TEMPLATE -->
@@ -397,5 +400,6 @@
   <a href="" onclick="attendActivity({{id}})">Prijava</a>
 </script> 
 <!-- ATTEND SINGLE ACTIVITY TEMPLATE -->    
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
