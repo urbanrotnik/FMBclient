@@ -391,10 +391,13 @@
 <!-- TEMPLATE -->  
 <!-- att ACTIVITY TEMPLATE -->
 <script id="att_my_activity-template" type="text/x-handlebars-template">
-  <h2><b>{{number_of_person}}</b></h2><br/>
-  <p>{{description}}</p><br/><br/>
-  {{activity.name}} {{activity.description}}  {{activity.start_time}}
-  <a href="" onclick="deleteActivity({{id}})">Odstrani</a>
+  <h2><b>Prijava na {{activity.name}}</b></h2>
+ 
+  {{activity.category.name}}
+  {{activity.name}} <br/> {{activity.description}}  {{activity.start_time}}<br/>
+  Uporabnik:<br/>
+  <b>{{user.name}} {{user.lastname}}</b><br/> {{user.email}}<br/> {{user.telephone}} 
+  <a href="" onclick="deleteAttend_activity({{id}})">Odstrani</a>
 </script> 
 
 <!-- SINGLE ACTIVITY TEMPLATE -->

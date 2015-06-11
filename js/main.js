@@ -24,6 +24,7 @@ function deleteActivity(id){
           //location.reload();
       }});
 };
+
 //Potrditev udeležbe
 function attendActivity(id){
      var _user = localStorage.username;
@@ -334,6 +335,31 @@ function loadAtt(data){
   var html = template(data);
   $("#AattActivity").html(html);           
 }
+
+function deleteAttend_activity(id){
+  var user = {
+              'username':localStorage.username,
+              'password':localStorage.password};
+   $.ajax({
+    
+      url: localStorage.url+'/attendant/'+id,
+      type: 'DELETE',
+      data: user,
+      dataType: 'json',        
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},            
+      error: function (xhr, status) {
+          alert("Težave pri prijavi!"+status);
+      },
+      success: function (data) {               
+          //$.mobile.pageContainer.pagecontainer('change', '#my_activities', { transition: "flip"});
+          my_activities();
+          //window.location.hash = 'myactivity';
+          //location.reload();
+      }});
+}
+
+
+
 
 ////////////////////////////////
 //SAMMY/////////////////////////
