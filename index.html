@@ -289,11 +289,28 @@
 </div>
 <!--   END page ACTIVITY DETALIS (iz mape) -->  
 
+
+<!--  page ACTIVITY DETALIS (iz mape) -->   
+<div data-role="page" id="my_activitiy_details">
+  <header data-role="header">
+    <h1></h1>
+    <a href="" onclick="index_page()" data-theme="b" class="ui-btn-right">Nazaj</a>
+  </header>
+  <div data-role="content" id="listview-content">
+    <div id="attendsingleActivity-my" data-demo-html="true"></div>
+  </div>
+  <div data-role="footer">
+    <h4>FMB</h4>
+  </div>
+</div>
+<!--   END page ACTIVITY DETALIS (iz mape) -->  
+
+
 <!--  page ATTENDANT DETAILS -->   
 <div data-role="page" id="attendant_details">
   <header data-role="header">
     <h1></h1>
-    <a href="" onclick="my_attendant_activities()" data-theme="b" class="ui-btn-right">Nazaj</a>
+    <a href="" onclick="my_attendant_activities()" data-theme="b" class="ui-btn-left">Nazaj</a>
   </header>
   <div data-role="content" id="listview-content">
     <div id="AattActivity" data-demo-html="true"></div>
@@ -313,12 +330,15 @@
   <div data-role="content" id="listview-content">
     <div id="singleActivity" data-demo-html="true"></div>
   </div>
+  <div id="seznam_prijavljenih">
+    <ul></ul>
+  </div>
   <div data-role="footer">
     <h4>FMB</h4>
   </div>
 </div>
-<!--   END page single MY ACTIVITY DETAILS-->  
-
+<!--   END page single MY ACTIVITY DETAILS--> 
+ 
 
 <!--   ADD ACTIVITY -->             
   <div data-role="page" id="add_activity" >
@@ -428,6 +448,15 @@
   <p>{{description}}</p><br/><br/>
   {{category.name}} {{start_time}}
   <a href="" onclick="attendActivity({{id}})">Prijava</a>
+
+
+</script> 
+
+<script id="attend_single_my_activity-template-my" type="text/x-handlebars-template">
+  <h2><b>{{name}}</b></h2><br/>
+  <p>{{description}}</p><br/><br/>
+  {{category.name}} {{start_time}}
+  
 </script> 
 <!-- ATTEND SINGLE ACTIVITY TEMPLATE -->    
 </body>

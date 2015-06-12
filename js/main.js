@@ -50,10 +50,10 @@ function attendActivity(id){
             dataType: 'json', 
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},           
             error: function (xhr, status) {
-                alert("Težave pri prijavi!"+status)
+              my_attendant_activities();
             },
             success: function (data) {
-             $.mobile.pageContainer.pagecontainer('change', '#my_attendant_activities', { transition: "flip"});
+              my_attendant_activities();
                  //window.location.hash = 'my_activity';
             }
       });
@@ -112,7 +112,21 @@ function my_activity_details(id){
     dataType: 'json', 
     contentType: 'application/json; charset=utf-8',           
     success: function (data) {                
-      loadSingleActivity(data);
+
+    if(data['user_id']==localStorage.getItem('id')){
+
+      var html_list = "<h2>Prijavljeni</h2><ul>";
+
+      for(var x = 0; x < data['attendant'].length; x++){
+         html_list = html_list + "<ul>" + data['attendant'][x]['user']['name'] +  " " + data['attendant'][x]['user']['lastname'] + "</ul>";
+      }
+
+      html_list = html_list + "</ul>";
+
+      loadSingleActivity(data, html_list);
+
+    }
+
     $.mobile.pageContainer.pagecontainer('change', '#my_activity_details', { transition: "flip"});
     }
   });
@@ -211,8 +225,8 @@ $("#submit-add_activity-btn").click(function(e){
     var _description = $("#description").val();
     var _start_time = $("#start_time").val();
     var _end_time = $("#end_time").val();
-    var _latitude = $("#latitude").val();
-    var _longitude = $("#longitude").val();
+    var _latitude = $("#latitude-input").val();
+    var _longitude = $("#longitude-input").val();
     var _category = $("#category").val();
     var _number_of_person = $("#number_of_person").val();
     if(_user!=='' || _pass!==''){
@@ -322,11 +336,14 @@ function loadSingleActivity(data){
   $("#articleHandlebars ul").listview().listview('refresh');
 }
 
-function loadSingleActivity(data){  
+
+function loadSingleActivity(data, html_list){  
   var source   = $("#single_my_activity-template").html();
   var template = Handlebars.compile(source);
   var html = template(data);
-  $("#singleActivity").html(html);           
+  $("#singleActivity").html(html);
+
+  $("#seznam_prijavljenih ul").html(html_list);           
 }
 
 function loadAttendSingleActivity(data){  
@@ -355,11 +372,11 @@ function deleteAttend_activity(id){
       dataType: 'json',        
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},            
       error: function (xhr, status) {
-          alert("Težave pri prijavi!"+status);
+          my_attendant_activities();
       },
       success: function (data) {               
           //$.mobile.pageContainer.pagecontainer('change', '#my_activities', { transition: "flip"});
-          my_activities();
+          my_attendant_activities();
           //window.location.hash = 'myactivity';
           //location.reload();
       }});
